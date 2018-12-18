@@ -67,6 +67,24 @@ int fs_open_custom(struct fs_file *file, const char *name)
 	len = img_favicon_size;
 	file->data = ( const char * )img_favicon;
   }
+
+  else if ( strcmp( name, "/orange" ) == 0 )
+    {
+      HAL_GPIO_TogglePin( GPIOD, LD3_Pin);
+    }
+    else if ( strcmp( name, "/green" ) == 0 )
+    {
+      HAL_GPIO_TogglePin( GPIOD, LD4_Pin);
+    }
+    else if ( strcmp( name, "/red" ) == 0 )
+    {
+      HAL_GPIO_TogglePin( GPIOD, LD5_Pin);
+    }
+    else if ( strcmp( name, "/blue" ) == 0 )
+    {
+      HAL_GPIO_TogglePin( GPIOD, LD6_Pin);
+    }
+
   else
   {
 	len = strlen( hello1 ) + strlen( hello2 ) + strlen( name );
