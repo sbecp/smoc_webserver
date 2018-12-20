@@ -61,6 +61,7 @@ const char hello2[] = //"<p>Hello</p>";
 int fs_open_custom(struct fs_file *file, const char *name)
 {
   int len = 0;
+  file->flags = 0;
 
   if ( strcmp( name, "/favicon.ico" ) == 0 )
   {
@@ -93,12 +94,12 @@ int fs_open_custom(struct fs_file *file, const char *name)
     strcpy( ( char * )file->data, hello1 );
     strcat( ( char * )file->data, name );
     strcat( ( char * )file->data, hello2 );
+    file->flags |= 0x04;
   }
 
   file->len = len;
   file->index = len;
   file->pextension = 0;
-  file->flags = 0;
 
   return len;
 }
@@ -106,7 +107,10 @@ int fs_open_custom(struct fs_file *file, const char *name)
 /*-----------------------------------------------------------------------------------*/
 void fs_close_custom(struct fs_file *file)
 {
-	free( ( char * )file->data );
+	if ( file->flags & 0x04 )
+	{
+	  free( ( char * )file->data );
+	}
 	file->data = 0;
 	file->len = 0;
 }
